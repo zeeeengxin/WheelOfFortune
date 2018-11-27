@@ -7,7 +7,7 @@ namespace WheelOfFortune
         public static void Main(string[] args)
         {
             Game newGame = new Game();
-            newGame.StartGame();
+            newGame.Start();
         }
     }
 }
