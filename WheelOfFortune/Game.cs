@@ -3,11 +3,11 @@ namespace WheelOfFortune
 {
     public class Game
     {
-        Player[] players;
+        readonly Player[] players;
         const int NumOfPlayers = 3;
         const int NumOfRounds = 3;
-        const char StartKey = 's';
-        const char EndKey = 'e';
+        const string StartKey = "S";
+        const string EndKey = "E";
 
         public Game()
         {
@@ -23,19 +23,20 @@ namespace WheelOfFortune
 
         private void PrintWelcomeMessage() 
         {
-            Console.WriteLine("Welcome to Wheel of Fortune!! Press any key to continue");
+            Console.WriteLine("Welcome to Wheel of Fortune!! Press Enter to continue");
             Console.Read();           
         }
 
         private void ShowMainMenu() 
         {
-            Console.WriteLine("Press 's' to start game, press 'e' to end game");
-            char userSelectKey = '\0';
-            while (userSelectKey != StartKey && userSelectKey != EndKey) 
+            string userSelectKey = String.Empty;
+            while (!StartKey.Equals(userSelectKey, StringComparison.InvariantCultureIgnoreCase) &&
+                   !EndKey.Equals(userSelectKey, StringComparison.InvariantCultureIgnoreCase)) 
             {
-                userSelectKey = Console.ReadKey().KeyChar;               
+                Console.WriteLine("Press {0} to start game, press {1} to end game", StartKey, EndKey);
+                userSelectKey = Console.ReadLine();               
             }
-            if (userSelectKey == StartKey) 
+            if (StartKey.Equals(userSelectKey, StringComparison.InvariantCultureIgnoreCase)) 
             {
                 PlayANewGame();
             } else 

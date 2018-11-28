@@ -40,6 +40,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="Round.cs" />
     <Compile Include="Turn.cs" />
+    <Compile Include="Wheel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
