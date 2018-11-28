@@ -6,6 +6,8 @@ namespace WheelOfFortune
         Player[] players;
         const int NumOfPlayers = 3;
         const int NumOfRounds = 3;
+        const char StartKey = 's';
+        const char EndKey = 'e';
 
         public Game()
         {
@@ -29,11 +31,11 @@ namespace WheelOfFortune
         {
             Console.WriteLine("Press 's' to start game, press 'e' to end game");
             char userSelectKey = '\0';
-            while (userSelectKey != 's' && userSelectKey != 'e') 
+            while (userSelectKey != StartKey && userSelectKey != EndKey) 
             {
                 userSelectKey = Console.ReadKey().KeyChar;               
             }
-            if (userSelectKey == 's') 
+            if (userSelectKey == StartKey) 
             {
                 PlayANewGame();
             } else 
@@ -44,9 +46,11 @@ namespace WheelOfFortune
         private void PlayANewGame() 
         {
             GetPlayers();
+            int prevWinnerIndex = -1;
             for (int i = 0; i < NumOfRounds; i++) 
             {
-                // TODO: play a round
+                Round newRound = new Round(i, players, prevWinnerIndex);
+                prevWinnerIndex = newRound.PlayARound();
             }
             GetWinner();
             ShowMainMenu();

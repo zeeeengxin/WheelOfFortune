@@ -12,13 +12,13 @@ namespace WheelOfFortune
         public int CurrentMoney 
         {
             get;
-            private set;
+            internal set;
         }
 
         public int TotalMoney 
         {
             get;
-            private set;
+            internal set;
         }
 
         public Player(string name)
