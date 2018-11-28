@@ -9,28 +9,40 @@ namespace WheelOfFortune
         private int currentPlayerIndex;
         private readonly int numOfPlayers;
         private bool solved;
+        private readonly Wheel wheel;
 
-        public Round(int n, Player[] players, int prevWinnerIndex)
+        public Round(int roundNum, Player[] players, int prevWinnerIndex)
         {
-            roundNum = n;
+            this.roundNum = roundNum;
             this.players = players;
-            this.challenge = new Challenge();
+            this.challenge = new Challenge(roundNum);
             this.currentPlayerIndex = prevWinnerIndex;
             this.numOfPlayers = players.Length;
+            this.wheel = new Wheel(roundNum);
+            ClearCurrentMoney();
+        }
+        private void ClearCurrentMoney() 
+        {
+            foreach (Player p in players) 
+            {
+                p.CurrentMoney = 0;
+            }
         }
         // return index of winner
         public int PlayARound()
         {
             while (!solved)
             {
-                Turn newTurn = new Turn(players[currentPlayerIndex], challenge);
+                GetNextPlayerIndex();
+                Turn newTurn = new Turn(players[currentPlayerIndex], challenge, wheel);
                 solved = newTurn.PlayATurn();
             }
-            return GetWinner();
+            GetWinner();
+            return currentPlayerIndex;
         }
         private void GetNextPlayerIndex()
         {
-            if (currentPlayerIndex == players.Length)
+            if (currentPlayerIndex == players.Length - 1)
             {
                 currentPlayerIndex = 0;
             } else
@@ -38,21 +50,11 @@ namespace WheelOfFortune
                 currentPlayerIndex++;
             }
         }
-        private int GetWinner()
+        private void GetWinner()
         {
-            Player winner = players[0];
-            int winnerIndex = 0;
-            for (int i = 1; i < numOfPlayers; i++)
-            {
-                if (players[i].CurrentMoney > winner.CurrentMoney)
-                {
-                    winner = players[i];
-                    winnerIndex = i;
-                }
-            }
-            winner.TotalMoney += winner.CurrentMoney;
-            Console.WriteLine("The winner for Round " + roundNum + " is " + winner.Name + "! You won $" + winner.CurrentMoney + "! Congrats!");
-            return winnerIndex;
+            Player winner = players[currentPlayerIndex];
+            // winner.TotalMoney += winner.CurrentMoney;
+            Console.WriteLine("The winner for Round " + roundNum + " is " + winner.Name + "! You won $" + winner.CurrentMoney + "! Congrats!");            
         }
     }
 }
